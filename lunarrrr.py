@@ -45,18 +45,24 @@ def datetophase(D,M,Y):
 
 
 def specificdate():
-    moon_phase = datetophase((int(D.get())),(int(M.get())),(int(Y.get())))
+    #These get the date entered by the user and split it into 3 seperate values to be used for the calculation.
+    x = sample_date.get()
+    Y = int(x[0:4])
+    M = int(x[5:7])
+    D = int(x[8:])
 
+
+    moon_phase = datetophase(D,M,Y)
     toprint.set(moon_phase)
 
+    #These set up the corresponding image to be displayed based on the value obtained by the calculations.
     moon_phase = displayimage(moon_phase)
-
     moon_phase = ImageTk.PhotoImage(Image.open(moon_phase))
     imgLabel.configure(image=moon_phase)
     imgLabel.photo = moon_phase
 
 def displayimage (x):
-
+    #This function connects a result string to the name of the image corresponding to it. 
     global mydict
 
     for m,n in mydict.items():
@@ -111,6 +117,29 @@ def nextphasenm():
 
 
 
+def calendar():
+    def date_entry():
+        sample_date.configure(state=NORMAL)
+        sample_date.delete(0, 10)
+        sample_date.insert(INSERT,cal.selection_get())
+        sample_date.configure(state=DISABLED)
+
+
+    top = Toplevel(screen)
+
+    cal = Calendar(top, font="Arial 14", selectmode='day', locale='en_US',
+                   disabledforeground='red',cursor="hand1", year=2020, month=1,)
+    cal.pack(fill="both", expand=True)
+
+    Button(top, text="select date", command=date_entry).pack()
+
+
+
+
+
+
+
+
 if __name__ == '__main__':
 
 
@@ -128,6 +157,7 @@ if __name__ == '__main__':
     from tkinter.ttk import *
     from datetime import datetime, timedelta
     from PIL import ImageTk, Image
+    from tkcalendar import Calendar
 
     screen = Tk()
     screen.configure(background='black')
@@ -150,32 +180,30 @@ if __name__ == '__main__':
 
 #-- Specific Date Widgets ---#
 
-    Label(SpecificDate, text="Enter a specific date to know the lunar phase").pack()
+    Label(SpecificDate, text="Select a specific date to know the lunar phase").pack()
 
-    Label(SpecificDate, text="Day").pack()
-    D = Entry(SpecificDate)
-    D.pack()
+    Button(SpecificDate, text=' See Calendar', command=calendar).pack(padx=10, pady=10)
 
-    Label(SpecificDate, text="Month").pack()
-    M = Entry(SpecificDate)
-    M.pack()
 
-    Label(SpecificDate, text="Year").pack()
-    Y = Entry(SpecificDate)
-    Y.pack()
 
-    Button(SpecificDate, text="See the lunar phase!", command=specificdate).pack()
+    sample_date = Entry(SpecificDate)
+    sample_date.pack()
+    Button(SpecificDate, text="Click to see the lunar phase!", command=specificdate).pack()
+
+
+
 
     toprint = StringVar()
+
     Label(SpecificDate, text="", textvariable=toprint).pack()
 
-    # Blank Image Label
+
 
     imgLabel = Label(SpecificDate)
     imgLabel.pack()
 
-    #I want to add an image here that corresponds to the answer produced, to do that i would have to run
-    # the string value of toprint into the function displayimage and that would produce the name of the image
+
+
 
 #-- When next widgets
 
@@ -187,6 +215,7 @@ if __name__ == '__main__':
 
     full = StringVar()
     Label(Whennext, text="", textvariable=full).pack()
+    #This uses the current date and the previous formula to determine and print the date of the next full moon
 
     Button(Whennext, text="Next New Moon", command=nextphasenm).pack()
 
@@ -196,6 +225,9 @@ if __name__ == '__main__':
 
     new = StringVar()
     Label(Whennext, text="", textvariable=new).pack()
+    # This uses the current date and the previous formula to determine and print the date of the next new moon
+
+
 
 
 #-- Today Widgets
