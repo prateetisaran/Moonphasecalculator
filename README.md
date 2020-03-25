@@ -2,10 +2,10 @@
 
 The moon phase calculator is a program that operates on a few base calculations, and then applies the calculations into different contexts to create a user-friendly interface
 
-## The calculations
+## The Calculations
 The calculations are present in two base functions in the program (converttojulian and datetophase) 
 
-#### Converttojulian 
+#### Convert to Julian 
 Julian dates are a date system that express a date in terms of the number of days after January 1, 4713 BC 12pm. 
 I decided to convert all the dates into Julian dates since it is much easier to use for more complex calcultations.  
 This function inputs 3 integer variables, the date, month and year. It then performs a series of calculations (Lines 3 to 8) 
@@ -14,7 +14,7 @@ Since the time on the original date was 12:00 from which the dates are calculate
 However, for this calculation, the duration of the entire day needs to be considered, so I had taken the integer part of the result value and then subtracted 0.5 from it. 
 Now, the value returned is the julian date representing 00:00 on the particular date. 
 
-#### Datetophase
+#### Date to Phase
 Date to phase is the core of the program that converts any given julian date and returns the lunar phase on that day. This function is used everywhere to produce different kinds of values. 
 Firstly, in line 28 it calculates the number of days since a given julian date where there was a full moon. 
 (I calculated this date with the information given in the pdf. Since a new moon happened on 1/6/2000 at 12:24:01, and the length of a lunar month is 29.54 days, I was able to calculate the earliest new moon in the julian date period.)  
